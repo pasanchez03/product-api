@@ -1,5 +1,6 @@
 package com.gapsi.product.service.impl;
 
+import com.gapsi.product.exception.ProductNotFoundException;
 import com.gapsi.product.model.Product;
 import com.gapsi.product.repository.ProductRepository;
 import com.gapsi.product.service.ProductService;
@@ -17,19 +18,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> getProductById(String id) {
-        return productRepository.findById(id);
+        return Optional.ofNullable(productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id)));
     }
 
     @Override
     public Optional<Product> updateProduct(String id, String description, String model) {
-        return productRepository.findById(id).map(product -> {
-            if (description != null) {
-                product.setDescription(description);
-            }
-            if (model != null) {
-                product.setModel(model);
-            }
-            return productRepository.save(product);
-        });
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+
+        if (description != null) {
+            product.setDescription(description);
+        }
+        if (model != null) {
+            product.setModel(model);
+        }
+
+        return Optional.of(productRepository.save(product));
     }
 }

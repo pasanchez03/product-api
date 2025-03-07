@@ -22,9 +22,13 @@ GET /products/{id}
 ```
 **Respuesta en caso de error (404 Not Found):**
 
+```json
 {
-    "message": "Product not found"
+    "mensaje": "Producto con ID A000000004 no encontrado.",
+    "error": "Producto no encontrado",
+    "timestamp": "2025-03-07T16:09:02.75658"
 }
+```
 
 ### **Actualizar un producto por ID:**
 ```http
@@ -56,7 +60,9 @@ PATCH /products/{id}
 
 ```json
 {
-    "message": "Invalid request data"
+  "mensaje": "Producto con ID A000000004 no encontrado.",
+  "error": "Producto no encontrado",
+  "timestamp": "2025-03-07T16:09:02.75658"
 }
 ```
 ---

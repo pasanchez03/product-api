@@ -24,9 +24,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
-        return productService.getProductById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(productService.getProductById(id).get());
     }
 
     @PatchMapping("/{id}")
@@ -37,7 +35,6 @@ public class ProductController {
                 updates.get("model")
         );
 
-        return updatedProduct.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(updatedProduct.get());
     }
 }
