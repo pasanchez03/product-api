@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: catalog-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: catalogdb
+    ports:
+      - "5432:5432"

@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Catalog API
+  description: REST API to retrieve and update product details in a catalog.
+  version: 1.0.0
+servers:
+  - url: https://product-api-571621003987.us-central1.run.app
+    description: Production server
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /products/{id}:
+    get:
+      summary: Retrieve product details
+      description: Returns the details of an product by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+    patch:
+      summary: Update allowed fields of an product
+      description: Allows updating the description or model of an product.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdate'
+      responses:
+        '200':
+          description: Product successfully updated
+        '400':
+          description: Invalid request data
+        '404':
+          description: Product not found
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 10
+        name:
+          type: string
+          maxLength: 20
+        description:
+          type: string
+          maxLength: 200
+        price:
+          type: number
+          format: float
+        model:
+          type: string
+          maxLength: 10
+    ProductUpdate:
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 200
+        model:
+          type: string
+          maxLength: 10
