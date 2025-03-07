@@ -28,7 +28,7 @@ GET /products/{id}
 
 ### **Actualizar un producto por ID:**
 ```http
-PATCH /api/v1/products/{id}
+PATCH /products/{id}
 ```
 
 📌 **Ejemplo de solicitud:**
